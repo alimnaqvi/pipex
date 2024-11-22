@@ -23,7 +23,7 @@ FT_PRINTF_SRCS = $(addprefix ft_printf/, ft_printf.c handle_specifiers1.c handle
 
 FT_PRINTF_OBJS = $(FT_PRINTF_SRCS:.c=.o)
 
-GNL_SRCS = $(addprefix get_next_line/, get_next_line.c get_next_line_utils.c)
+GNL_SRCS = $(addprefix get_next_line/, get_next_line.c)
 
 GNL_OBJS = $(GNL_SRCS:.c=.o)
 

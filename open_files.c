@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:11:19 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/22 13:12:45 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/22 16:37:59 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static int	handle_infile(char *infile)
 {
 	int	fd;
 
-	if (access(infile, F_OK|R_OK) == -1)
+	if (access(infile, F_OK | R_OK) == -1)
 	{
 		ft_putstr_fd(infile, 2);
 		perror(": Cannot access file for reading");
 		exit(EXIT_FAILURE);
 	}
-	fd =  open(infile, O_RDONLY);
+	fd = open(infile, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putstr_fd(infile, 2);
@@ -45,7 +45,7 @@ static int	handle_outfile(char *outfile)
 			return (-1);
 		}
 	}
-	fd =  open(outfile, O_WRONLY|O_CREAT|O_TRUNC, 0644);
+	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		ft_putstr_fd(outfile, 2);
@@ -54,7 +54,7 @@ static int	handle_outfile(char *outfile)
 	return (fd);
 }
 
-void check_and_open_files(int argc, char **argv, int *in_fd, int *out_fd)
+void	check_and_open_files(int argc, char **argv, int *in_fd, int *out_fd)
 {
 	if (argc != 5)
 	{
@@ -65,7 +65,7 @@ void check_and_open_files(int argc, char **argv, int *in_fd, int *out_fd)
 	*out_fd = handle_outfile(argv[4]);
 	if (*out_fd == -1)
 	{
-		close (*in_fd);
+		close(*in_fd);
 		exit(EXIT_FAILURE);
 	}
 }
