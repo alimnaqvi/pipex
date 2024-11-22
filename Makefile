@@ -2,7 +2,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = pipex.c # to be updated
+SRCS = pipex.c open_files.c # to be updated
 
 OBJS = $(SRCS:.c=.o)
 
