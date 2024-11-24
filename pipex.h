@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:16:19 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/24 12:59:20 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/24 14:41:18 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	check_and_open_files(int argc, char **argv, int *in_fd, int *out_fd);
 // functions to check if given commands are valid, then make them execve ready
 int		check_and_init_cmds(char **argv, char **envp, char ***cmd1,
 			char ***cmd2);
+
+// functions to create pipe, fork processes, and execute the commands
+void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp);
 
 // helper functions
 void	free_splits(char ***splits);
