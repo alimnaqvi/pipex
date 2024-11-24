@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:16:19 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/22 17:21:36 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:59:20 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		check_and_init_cmds(char **argv, char **envp, char ***cmd1,
 
 // helper functions
 void	free_splits(char ***splits);
+void	cleanup_exit(int *fds, char ***cmd1, char ***cmd2, int status);
 
 #endif
