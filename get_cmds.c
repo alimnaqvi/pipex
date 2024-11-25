@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:17:34 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/25 13:37:45 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/25 13:46:25 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ static char	**get_cmd(char *cmd_str, char **paths)
 	}
 	if (find_executable(&cmd_arr, paths) == -1)
 	{
-		ft_putstr_fd(*cmd_arr, 2);
-		ft_putendl_fd(": command not found", 2);
+		if (**cmd_arr != '/' && **cmd_arr != '.')
+		{
+			ft_putstr_fd(*cmd_arr, 2);
+			ft_putendl_fd(": command not found", 2);
+		}
 		free_splits(&cmd_arr);
 		return (NULL);
 	}
