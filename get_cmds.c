@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:17:34 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/24 14:56:42 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/25 13:37:45 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static int	handle_rel_abs_path(char *str)
 {
 	if (access(str, F_OK) == -1)
 	{
-		ft_putendl_fd(str, 2);
+		ft_putstr_fd(str, 2);
 		perror(": Command not found");
 		return (-1);
 	}
 	if (access(str, X_OK) == -1)
 	{
-		ft_putendl_fd(str, 2);
+		ft_putstr_fd(str, 2);
 		perror(": Command could not be accessed for execution");
 		return (-1);
 	}
