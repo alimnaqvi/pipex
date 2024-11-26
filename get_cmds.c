@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:17:34 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/25 13:46:25 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:17:35 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,11 @@ static char	**get_cmd(char *cmd_str, char **paths)
 {
 	char	**cmd_arr;
 
-	cmd_arr = ft_split(cmd_str, ' ');
+	cmd_arr = ft_split_with_quotes(cmd_str, ' ');
 	if (!cmd_arr)
-	{
-		perror("malloc failed");
-		return (NULL);
-	}
+		return (perror("malloc failed"), NULL);
+	if (trim_quotes(cmd_arr) == -1)
+		return (free_splits(&cmd_arr), perror("malloc failed"), NULL);
 	if (find_executable(&cmd_arr, paths) == -1)
 	{
 		if (**cmd_arr != '/' && **cmd_arr != '.')
@@ -98,10 +97,7 @@ static char	**get_paths(char **envp)
 	}
 	paths = ft_split((*envp) + 5, ':');
 	if (!paths)
-	{
-		perror("malloc failed");
-		return (NULL);
-	}
+		return (perror("malloc failed"), NULL);
 	return (paths);
 }
 

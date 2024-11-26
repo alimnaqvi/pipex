@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:20:44 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/24 13:37:23 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:28:23 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,22 @@ void	cleanup_exit(int *fds, char ***cmd1, char ***cmd2, int status)
 	free_splits(cmd1);
 	free_splits(cmd2);
 	exit(status);
+}
+
+int	trim_quotes(char **splits)
+{
+	int		i;
+	char	*s1;
+
+	i = 0;
+	while (splits[i])
+	{
+		s1 = ft_strtrim(splits[i], "'\"");
+		if (!s1)
+			return (-1);
+		free(splits[i]);
+		splits[i] = s1;
+		i++;
+	}
+	return (0);
 }
