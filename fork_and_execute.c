@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:39:51 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/26 18:18:53 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 18:21:26 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,14 @@ void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp)
 	}
 	else if (pid == 0)
 	{
-		free_splits(cmd2);
-		close(pipefd[0]);
-		exec_first_cmd(fds, cmd1, pipefd, envp);
+		free_splits(cmd1);
+		close(pipefd[1]);
+		exec_second_cmd(fds, cmd2, pipefd, envp);
 	}
 	else
 	{
-		free_splits(cmd1);
-		close(pipefd[1]);
-		wait(NULL);
-		exec_second_cmd(fds, cmd2, pipefd, envp);
+		free_splits(cmd2);
+		close(pipefd[0]);
+		exec_first_cmd(fds, cmd1, pipefd, envp);
 	}
 }
