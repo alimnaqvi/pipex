@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:11:19 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/22 16:37:59 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 18:44:12 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ static int	handle_infile(char *infile)
 
 	if (access(infile, F_OK | R_OK) == -1)
 	{
-		ft_putstr_fd(infile, 2);
-		perror(": Cannot access file for reading");
-		exit(EXIT_FAILURE);
+		perror(infile);
+		infile = "/dev/null";
 	}
 	fd = open(infile, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd(infile, 2);
-		perror(": Cannot open file");
+		perror(infile);
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
@@ -40,16 +38,14 @@ static int	handle_outfile(char *outfile)
 	{
 		if (access(outfile, W_OK) == -1)
 		{
-			ft_putstr_fd(outfile, 2);
-			perror(": Cannot access file for writing");
+			perror(outfile);
 			return (-1);
 		}
 	}
 	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		ft_putstr_fd(outfile, 2);
-		perror(": Cannot open file");
+		perror(outfile);
 	}
 	return (fd);
 }
