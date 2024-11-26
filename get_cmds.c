@@ -6,42 +6,42 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:17:34 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/26 14:17:35 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 19:19:27 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	handle_rel_abs_path(char *str)
-{
-	if (access(str, F_OK) == -1)
-	{
-		ft_putstr_fd(str, 2);
-		perror(": Command not found");
-		return (-1);
-	}
-	if (access(str, X_OK) == -1)
-	{
-		ft_putstr_fd(str, 2);
-		perror(": Command could not be accessed for execution");
-		return (-1);
-	}
-	return (0);
-}
+// static int	handle_rel_abs_path(char *str)
+// {
+// 	if (access(str, F_OK) == -1)
+// 	{
+// 		ft_putstr_fd(str, 2);
+// 		perror(": Command not found");
+// 		return (-1);
+// 	}
+// 	if (access(str, X_OK) == -1)
+// 	{
+// 		ft_putstr_fd(str, 2);
+// 		perror(": Command could not be accessed for execution");
+// 		return (-1);
+// 	}
+// 	return (0);
+// }
 
 static int	find_executable(char ***cmd_arr, char **paths)
 {
 	char	*current_path;
 	size_t	len;
 
-	if (***cmd_arr == '/' || ***cmd_arr == '.')
-		return (handle_rel_abs_path(**cmd_arr));
+	// if (***cmd_arr == '/' || ***cmd_arr == '.')
+	// 	return (handle_rel_abs_path(**cmd_arr));
 	while (*paths)
 	{
 		len = sizeof(char) * (ft_strlen(*paths) + ft_strlen(**cmd_arr) + 2);
 		current_path = malloc(len);
 		if (!current_path)
-			return (-1);
+			return (perror("malloc failed") ,-1);
 		ft_strlcpy(current_path, *paths, len);
 		ft_strlcat(current_path, "/", len);
 		ft_strlcat(current_path, **cmd_arr, len);
@@ -52,7 +52,7 @@ static int	find_executable(char ***cmd_arr, char **paths)
 		paths++;
 	}
 	if (!current_path)
-		return (-1);
+		return (0); // change -1 to 0
 	free(**cmd_arr);
 	**cmd_arr = current_path;
 	return (0);
@@ -69,11 +69,11 @@ static char	**get_cmd(char *cmd_str, char **paths)
 		return (free_splits(&cmd_arr), perror("malloc failed"), NULL);
 	if (find_executable(&cmd_arr, paths) == -1)
 	{
-		if (**cmd_arr != '/' && **cmd_arr != '.')
-		{
-			ft_putstr_fd(*cmd_arr, 2);
-			ft_putendl_fd(": command not found", 2);
-		}
+		// if (**cmd_arr != '/' && **cmd_arr != '.')
+		// {
+		// 	ft_putstr_fd(*cmd_arr, 2);
+		// 	ft_putendl_fd(": command not found", 2);
+		// }
 		free_splits(&cmd_arr);
 		return (NULL);
 	}
@@ -105,11 +105,11 @@ int	check_and_init_cmds(char **argv, char **envp, char ***cmd1, char ***cmd2)
 {
 	char	**paths;
 
-	if (!*argv[2] || !*argv[3])
-	{
-		ft_putendl_fd("Error: Empty command", 2);
-		return (-1);
-	}
+	// if (!*argv[2] || !*argv[3])
+	// {
+	// 	ft_putendl_fd("Error: Empty command", 2);
+	// 	return (-1);
+	// }
 	paths = get_paths(envp);
 	if (!paths)
 		return (-1);

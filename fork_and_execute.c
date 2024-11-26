@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:39:51 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/26 18:21:26 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/26 20:04:12 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	exec_second_cmd(int *fds, char ***cmd2, int *pipefd, char **envp)
 	close(fds[0]);
 	if (execve(*cmd2[0], *cmd2, envp) == -1)
 	{
-		perror("execve failed");
-		return (free_splits(cmd2), exit(EXIT_FAILURE));
+		perror(*cmd2[0]);
+		return (free_splits(cmd2), exit(127)); // change exit code to 127
 	}
 }
 
@@ -53,8 +53,8 @@ static void	exec_first_cmd(int *fds, char ***cmd1, int *pipefd, char **envp)
 	close(fds[1]);
 	if (execve(*cmd1[0], *cmd1, envp) == -1)
 	{
-		perror("execve failed");
-		return (free_splits(cmd1), exit(EXIT_FAILURE));
+		perror(*cmd1[0]);
+		return (free_splits(cmd1), exit(127)); // change exit code to 127
 	}
 }
 
