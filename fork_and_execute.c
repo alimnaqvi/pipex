@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:39:51 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/27 19:55:44 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/27 20:00:17 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ pid_t	first_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp)
 
 	pid1 = fork();
 	if (pid1 == -1)
-	{	
+	{
 		perror("fork failed");
 		cleanup_exit(fds, cmds, cmds + 1, EXIT_FAILURE);
 	}
@@ -85,7 +85,7 @@ pid_t	second_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp)
 
 	pid2 = fork();
 	if (pid2 == -1)
-	{	
+	{
 		perror("fork failed");
 		cleanup_exit(fds, cmds, cmds + 1, EXIT_FAILURE);
 	}
@@ -97,40 +97,3 @@ pid_t	second_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp)
 	}
 	return (pid2);
 }
-
-// void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp)
-// {
-// 	int		pipefd[2];
-// 	pid_t	pid1;
-// 	pid_t	pid2;
-// 	int		status1;
-// 	int		status2;
-
-// 	if (set_up_pipe(pipefd) == -1)
-// 		cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
-// 	pid1 = fork();
-// 	if (pid1 == -1)
-// 		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE));
-// 	else if (pid1 == 0)
-// 	{
-// 		free_splits(cmd2);
-// 		close(pipefd[0]);
-// 		exec_first_cmd(fds, cmd1, pipefd, envp);
-// 	}
-// 	pid2 = fork();
-// 	if (pid2 == -1)
-// 		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE));
-// 	else if (pid2 == 0)
-// 	{
-// 		free_splits(cmd1);
-// 		close(pipefd[1]);
-// 		exec_second_cmd(fds, cmd2, pipefd, envp);
-// 	}
-// 	close(pipefd[0]);
-// 	close(pipefd[1]);
-// 	waitpid(pid1, &status1, 0);
-// 	waitpid(pid2, &status2, 0);
-// 	if (((status2)&0x7f) == 0)
-// 		cleanup_exit(fds, cmd1, cmd2, ((status2)&0xff00) >> 8);
-// 	cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
-// }
