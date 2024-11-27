@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:16:19 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/26 14:19:00 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:55:10 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int		check_and_init_cmds(char **argv, char **envp, char ***cmd1,
 			char ***cmd2);
 
 // functions to create pipe, fork processes, and execute the commands
-void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp);
+pid_t	first_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp);
+pid_t	second_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp);
+// void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp);
 
 // alternative to ft_split that considers everything inside quotes as one 'word'
 char	**ft_split_with_quotes(char const *s, char c);

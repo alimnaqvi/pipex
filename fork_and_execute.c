@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:39:51 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/27 16:08:30 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:55:44 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,49 +60,77 @@ static void	exec_first_cmd(int *fds, char ***cmd1, int *pipefd, char **envp)
 	}
 }
 
-static int	set_up_pipe(int *pipefd)
+pid_t	first_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp)
 {
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe failed");
-		return (-1);
-	}
-	return (0);
-}
-
-void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp)
-{
-	int		pipefd[2];
 	pid_t	pid1;
-	pid_t	pid2;
-	int		status1;
-	int		status2;
 
-	if (set_up_pipe(pipefd) == -1)
-		cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 == -1)
-		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, 1));
+	{	
+		perror("fork failed");
+		cleanup_exit(fds, cmds, cmds + 1, EXIT_FAILURE);
+	}
 	else if (pid1 == 0)
 	{
-		free_splits(cmd2);
+		free_splits(cmds + 1);
 		close(pipefd[0]);
-		exec_first_cmd(fds, cmd1, pipefd, envp);
+		exec_first_cmd(fds, cmds, pipefd, envp);
 	}
+	return (pid1);
+}
+
+pid_t	second_fork_execute(int *fds, char ***cmds, int *pipefd, char **envp)
+{
+	pid_t	pid2;
+
 	pid2 = fork();
 	if (pid2 == -1)
-		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, 1));
+	{	
+		perror("fork failed");
+		cleanup_exit(fds, cmds, cmds + 1, EXIT_FAILURE);
+	}
 	else if (pid2 == 0)
 	{
-		free_splits(cmd1);
+		free_splits(cmds);
 		close(pipefd[1]);
-		exec_second_cmd(fds, cmd2, pipefd, envp);
+		exec_second_cmd(fds, cmds + 1, pipefd, envp);
 	}
-	close(pipefd[0]);
-	close(pipefd[1]);
-	waitpid(pid1, &status1, 0);
-	waitpid(pid2, &status2, 0);
-	if (((status2)&0x7f) == 0)
-		cleanup_exit(fds, cmd1, cmd2, ((status2)&0xff00) >> 8);
-	cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
+	return (pid2);
 }
+
+// void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp)
+// {
+// 	int		pipefd[2];
+// 	pid_t	pid1;
+// 	pid_t	pid2;
+// 	int		status1;
+// 	int		status2;
+
+// 	if (set_up_pipe(pipefd) == -1)
+// 		cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
+// 	pid1 = fork();
+// 	if (pid1 == -1)
+// 		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE));
+// 	else if (pid1 == 0)
+// 	{
+// 		free_splits(cmd2);
+// 		close(pipefd[0]);
+// 		exec_first_cmd(fds, cmd1, pipefd, envp);
+// 	}
+// 	pid2 = fork();
+// 	if (pid2 == -1)
+// 		return (perror("fork failed"), cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE));
+// 	else if (pid2 == 0)
+// 	{
+// 		free_splits(cmd1);
+// 		close(pipefd[1]);
+// 		exec_second_cmd(fds, cmd2, pipefd, envp);
+// 	}
+// 	close(pipefd[0]);
+// 	close(pipefd[1]);
+// 	waitpid(pid1, &status1, 0);
+// 	waitpid(pid2, &status2, 0);
+// 	if (((status2)&0x7f) == 0)
+// 		cleanup_exit(fds, cmd1, cmd2, ((status2)&0xff00) >> 8);
+// 	cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
+// }
