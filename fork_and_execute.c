@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 14:39:51 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/27 13:00:25 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/27 13:12:38 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	fork_and_execute(int *fds, char ***cmd1, char ***cmd2, char **envp)
 	int status1, status2;
     waitpid(pid1, &status1, 0);
     waitpid(pid2, &status2, 0);
-	// if (WIFEXITED(status2))
-	// 	cleanup_exit(fds, cmd1, cmd2, WEXITSTATUS(status2));
-    cleanup_exit(fds, cmd1, cmd2, ((status2) & 0xff00) >> 8);
+	if (((status2) & 0x7f) == 0)
+		cleanup_exit(fds, cmd1, cmd2, ((status2) & 0xff00) >> 8);
+    cleanup_exit(fds, cmd1, cmd2, EXIT_FAILURE);
 }
