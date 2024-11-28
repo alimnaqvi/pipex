@@ -6,7 +6,7 @@
 /*   By: anaqvi <anaqvi@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:20:44 by anaqvi            #+#    #+#             */
-/*   Updated: 2024/11/26 14:28:23 by anaqvi           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:28:52 by anaqvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	trim_quotes(char **splits)
 	i = 0;
 	while (splits[i])
 	{
-		s1 = ft_strtrim(splits[i], "'\"");
+		if (splits[i][0] == '\'')
+			s1 = ft_strtrim(splits[i], "'");
+		else if (splits[i][0] == '"')
+			s1 = ft_strtrim(splits[i], "\"");
+		else
+			s1 = ft_strtrim(splits[i], "");
 		if (!s1)
 			return (-1);
 		free(splits[i]);
