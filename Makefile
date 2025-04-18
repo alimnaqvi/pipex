@@ -6,19 +6,19 @@ SRCS = pipex.c open_files.c get_cmds.c split.c fork_and_execute.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 
-LIBFT_DIR = ./libft
+LIBFT_DIR = libft
 
-LIBFT = libft.a
+LIBFT = $(LIBFT_DIR)/libft.a
 
 NAME = pipex
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -I $(LIBFT_DIR)/includes -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -I $(LIBFT_DIR)/includes -o $(<:.c=.o)
