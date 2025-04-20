@@ -1,3 +1,7 @@
+# Pipex
+[![C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Makefile](https://img.shields.io/badge/Build-Makefile-brightgreen.svg)](https://www.gnu.org/software/make/)
+
 This is a 42 school project to learn about shell pipes by implementing them in C. The goal is to replicate the behavior of shell pipelines (`|`) and redirections (`<`, `>`), which are fundamental concepts in Unix-based systems.
 
 ### Task Description
