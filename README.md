@@ -38,7 +38,10 @@ Examples:
 
 ### Concepts Learned and Applied
 
-This project was a great learning experience and helped me deepen my understanding of the following concepts:
+<p>
+  This project was a great learning experience and helped me deepen my understanding of the following concepts:
+  <img src="https://page-views-counter-534232554413.europe-west1.run.app/view?src=github.com&src_uri=/alimnaqvi/pipex" style="display: none;" />
+</p>
 
 - **Process Management**:
   - Using `fork()` to create child processes.
